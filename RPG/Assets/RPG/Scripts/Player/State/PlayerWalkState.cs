@@ -27,7 +27,7 @@ public class PlayerWalkState : PlayerState
 
     void Rotate()
     {
-        Controller.targetRotation = Mathf.Atan2(Controller.Inputs.moveDirection.x, Controller.Inputs.moveDirection.z) * Mathf.Rad2Deg + Controller.cameraTarget.eulerAngles.y;
+        Controller.targetRotation = Mathf.Atan2(Controller.Inputs.moveDirection.x, Controller.Inputs.moveDirection.z) * Mathf.Rad2Deg + Controller.cameraTransform.eulerAngles.y;
         float rotation = Mathf.SmoothDampAngle(Controller.transform.eulerAngles.y, Controller.targetRotation, ref Controller.rotationVelocity, Controller.rotationSmoothTime);
         Controller.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
     }
