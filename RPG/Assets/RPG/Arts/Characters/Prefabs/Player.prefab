@@ -1105,8 +1105,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   moveDirection: {x: 0, y: 0, z: 0}
-  look: {x: 0, y: 0}
-  zoom: 0
   jump: 0
   isWalk: 0
 --- !u!114 &8325498140835982051
@@ -1121,11 +1119,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f16c5f3c1c3e1dc4db41a267c8cd2883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 1
+  runSpeed: 2.2
+  jumpHeight: 1
+  gravity: -15
   rotationSmoothTime: 0.12
-  targetRotation: 0
-  rotationVelocity: 0
-  verticalVelocity: 0
-  cameraTarget: {fileID: 0}
+  terminalVelocity: -53
+  targetSpeed: 0
+  targetRotation: 82.20386
+  rotationVelocity: -5.4523177
+  verticalVelocity: -2
+  isGrounded: 1
+  groundedOffset: -0.14
+  groundedRadius: 0.28
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  cameraTransform: {fileID: 0}
 --- !u!4 &9077630764308483947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3808002924755822216, guid: 485d662c63590f74dac20be0cf684019,

@@ -9,6 +9,7 @@ public class PlayerStateMachine : StateMachine<PlayerStateName, PlayerController
         AddState(PlayerStateName.Idle, new PlayerIdleState(this));
         AddState(PlayerStateName.Walk, new PlayerWalkState(this));
         AddState(PlayerStateName.Run, new PlayerRunState(this));
+        AddState(PlayerStateName.Jump, new PlayerJumpState(this));
 
         ChangeState(PlayerStateName.Idle, true);
     }

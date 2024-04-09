@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class PlayerInputs : MonoBehaviour
 {
@@ -22,9 +21,20 @@ public class PlayerInputs : MonoBehaviour
         MoveInput(value.Get<Vector2>());
     }
 
+    public void OnJump(InputValue value)
+    {
+        jump = value.isPressed;
+    }
+
+    public void OnChangeWalkRun(InputValue value)
+    {
+        isWalk = !isWalk;
+    }
+
     public void MoveInput(Vector2 value)
     {
         move = value;
         moveDirection = new Vector3(move.x, 0.0f, move.y).normalized;
     }
+
 }

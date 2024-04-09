@@ -12,29 +12,35 @@ public class PlayerWalkState : PlayerState
     public override void OnEnter()
     {
         Controller.Animator.CrossFadeInFixedTime("Walk_front@loop", 0.1f);
+        Controller.targetSpeed = Controller.walkSpeed;
     }
 
     public override void Update()
     {
+        if (Controller.isGrounded)
+        {
+            if (Controller.Inputs.jump == true)
+            {
+                StateMachine.ChangeState(PlayerStateName.Jump);
+                return;
+            }
+        }
+
         if (Controller.Inputs.move == Vector2.zero)
         {
             StateMachine.ChangeState(PlayerStateName.Idle);
+            return;
+        }
+        else
+        {
+            if (Controller.Inputs.isWalk == false)
+            {
+                StateMachine.ChangeState(PlayerStateName.Run);
+                return;
+            }
         }
 
         Rotate();
         Move();
-    }
-
-    void Rotate()
-    {
-        Controller.targetRotation = Mathf.Atan2(Controller.Inputs.moveDirection.x, Controller.Inputs.moveDirection.z) * Mathf.Rad2Deg + Controller.cameraTransform.eulerAngles.y;
-        float rotation = Mathf.SmoothDampAngle(Controller.transform.eulerAngles.y, Controller.targetRotation, ref Controller.rotationVelocity, Controller.rotationSmoothTime);
-        Controller.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-    }
-
-    void Move()
-    {
-        Vector3 targetDirection = Quaternion.Euler(0.0f, Controller.targetRotation, 0.0f) * Vector3.forward;
-        Controller.CharacterController.Move(Controller.AnimatorDeltaPosition);
     }
 }
