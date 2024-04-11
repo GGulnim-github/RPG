@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerStateMachine StateMachine { get; private set; }
+    [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
     public PlayerInputs Inputs { get; private set; }
 
     public Animator Animator { get; private set; }
@@ -12,22 +11,29 @@ public class PlayerController : MonoBehaviour
     public Vector3 AnimatorDeltaPosition { get; private set; }
     public Vector3 AnimatorVelocity { get; private set; }
 
-    public float walkSpeed = 2.0f;
-    public float runSpeed = 6.0f;
+    [Header("Player")]
+    public float walkSpeed = 1.0f;
+    public float runSpeed = 2.2f;
+    public float dashSpeed = 6.0f;
     public float jumpHeight = 1.0f;
-    public float gravity = -9.81f;
+    public float gravity = -15f;
     public float rotationSmoothTime = 0.12f;
     public float terminalVelocity = -53.0f;
-    [HideInInspector] public float targetSpeed = 0.0f;
-    [HideInInspector] public float targetRotation = 0.0f;
+
+    [HideInInspector] public float targetSpeed;
+    [HideInInspector] public float targetRotation;
     [HideInInspector] public float rotationVelocity;
     [HideInInspector] public float verticalVelocity;
 
     [HideInInspector] public bool isGrounded = true;
+    [Space(5)]
+    [Header("Ground")]
     public float groundedOffset = -0.14f;
     public float groundedRadius = 0.28f;
     public LayerMask groundLayers;
 
+    [Space(5)]
+    [Header("Camera")]
     public Transform cameraTransform;
 
     private void Awake()

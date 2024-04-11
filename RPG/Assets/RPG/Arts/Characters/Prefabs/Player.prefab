@@ -1105,6 +1105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   moveDirection: {x: 0, y: 0, z: 0}
+  dash: 0
   jump: 0
   isWalk: 0
 --- !u!114 &8325498140835982051
@@ -1121,6 +1122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 1
   runSpeed: 2.2
+  dashSpeed: 6
   jumpHeight: 1
   gravity: -15
   rotationSmoothTime: 0.12
@@ -1134,7 +1136,7 @@ MonoBehaviour:
   groundedRadius: 0.28
   groundLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 65
   cameraTransform: {fileID: 0}
 --- !u!4 &9077630764308483947 stripped
 Transform:

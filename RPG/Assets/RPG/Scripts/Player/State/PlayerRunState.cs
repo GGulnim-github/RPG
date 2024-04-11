@@ -24,6 +24,11 @@ public class PlayerRunState : PlayerState
                 return;
             }
         }
+        else
+        {
+            StateMachine.ChangeState(PlayerStateName.Fall);
+            return;
+        }
 
         if (Controller.Inputs.move == Vector2.zero)
         {
@@ -32,10 +37,18 @@ public class PlayerRunState : PlayerState
         }
         else
         {
-            if (Controller.Inputs.isWalk == true)
+            if (Controller.Inputs.dash == true)
             {
-                StateMachine.ChangeState(PlayerStateName.Walk);
+                StateMachine.ChangeState(PlayerStateName.Dash);
                 return;
+            }
+            else
+            {
+                if (Controller.Inputs.isWalk == true)
+                {
+                    StateMachine.ChangeState(PlayerStateName.Walk);
+                    return;
+                }
             }
         } 
 

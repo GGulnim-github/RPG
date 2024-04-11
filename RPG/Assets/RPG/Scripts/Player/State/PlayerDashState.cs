@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
-public class PlayerWalkState : PlayerState
+public class PlayerDashState : PlayerState
 {
-    public PlayerWalkState(StateMachine<PlayerStateName, PlayerController> stateMachine) : base(stateMachine)
+    public PlayerDashState(StateMachine<PlayerStateName, PlayerController> stateMachine) : base(stateMachine)
     {
     }
 
     public override void OnEnter()
     {
-        Controller.Animator.CrossFadeInFixedTime("Walk_front@loop", 0.1f);
-        Controller.targetSpeed = Controller.walkSpeed;
+        Controller.Animator.CrossFadeInFixedTime("Dash_Front@loop", 0.1f);
+        Controller.targetSpeed = Controller.dashSpeed;
     }
 
     public override void Update()
@@ -38,14 +37,14 @@ public class PlayerWalkState : PlayerState
         }
         else
         {
-            if (Controller.Inputs.dash == true)
+            if (Controller.Inputs.dash == false)
             {
-                StateMachine.ChangeState(PlayerStateName.Dash);
-                return;
-            }
-            else
-            {
-                if (Controller.Inputs.isWalk == false)
+                if (Controller.Inputs.isWalk == true)
+                {
+                    StateMachine.ChangeState(PlayerStateName.Walk);
+                    return;
+                }
+                else
                 {
                     StateMachine.ChangeState(PlayerStateName.Run);
                     return;

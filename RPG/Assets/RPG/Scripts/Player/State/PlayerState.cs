@@ -18,7 +18,7 @@ public class PlayerState : State<PlayerStateName, PlayerController>
 
     public void Move()
     {
-        Vector3 targetDirection = Quaternion.Euler(0.0f, Controller.targetRotation, 0.0f) * Vector3.forward;
+        Vector3 targetDirection = Quaternion.Euler(0.0f, Controller.targetRotation, 0.0f) * Vector3.forward;   
         Controller.CharacterController.Move(Controller.targetSpeed * Time.deltaTime * targetDirection.normalized
             + new Vector3(0.0f, Controller.verticalVelocity, 0.0f) * Time.deltaTime);
     }
@@ -26,7 +26,6 @@ public class PlayerState : State<PlayerStateName, PlayerController>
     public void InAir()
     {
         Controller.verticalVelocity += Controller.gravity * Time.deltaTime;
-        Controller.Animator.SetFloat("VerticalVelocity", Controller.verticalVelocity);
 
         Vector3 targetDirection = Quaternion.Euler(0.0f, Controller.targetRotation, 0.0f) * Vector3.forward;
         Controller.CharacterController.Move(Controller.targetSpeed * Time.deltaTime * targetDirection.normalized

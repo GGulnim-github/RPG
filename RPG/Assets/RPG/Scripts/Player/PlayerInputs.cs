@@ -8,6 +8,7 @@ public class PlayerInputs : MonoBehaviour
     public Vector2 move;
     public Vector3 moveDirection;
 
+    public bool dash;
     public bool jump;
     public bool isWalk;
 
@@ -24,6 +25,11 @@ public class PlayerInputs : MonoBehaviour
     public void OnJump(InputValue value)
     {
         jump = value.isPressed;
+    }
+
+    public void OnDash(InputValue value)
+    {
+        dash = value.isPressed;
     }
 
     public void OnChangeWalkRun(InputValue value)

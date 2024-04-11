@@ -10,7 +10,19 @@ public class PlayerIdleState : PlayerState
 
     public override void OnEnter()
     {
-        Controller.Animator.CrossFadeInFixedTime("StandA@loop", 0.1f);
+        if (StateMachine.PreviousStateName == PlayerStateName.Dash)
+        {
+            Controller.Animator.CrossFadeInFixedTime("Dash_ToStandC", 0.1f);
+        }
+        else if (StateMachine.PreviousStateName == PlayerStateName.Fall)
+        {
+            Controller.Animator.CrossFadeInFixedTime("Jump_ToStandC", 0.1f);
+        }
+        else
+        {
+            Controller.Animator.CrossFadeInFixedTime("StandA@loop", 0.1f);
+        }
+
         Controller.targetSpeed = 0.0f;
     }
 
@@ -24,18 +36,31 @@ public class PlayerIdleState : PlayerState
                 return;
             }
         }
+        else
+        {
+            StateMachine.ChangeState(PlayerStateName.Fall);
+            return;
+        }
 
         if (Controller.Inputs.move != Vector2.zero)
         {
-            if (Controller.Inputs.isWalk == true)
+            if (Controller.Inputs.dash == true)
             {
-                StateMachine.ChangeState(PlayerStateName.Walk);
+                StateMachine.ChangeState(PlayerStateName.Dash);
                 return;
             }
             else
             {
-                StateMachine.ChangeState(PlayerStateName.Run);
-                return;
+                if (Controller.Inputs.isWalk == true)
+                {
+                    StateMachine.ChangeState(PlayerStateName.Walk);
+                    return;
+                }
+                else
+                {
+                    StateMachine.ChangeState(PlayerStateName.Run);
+                    return;
+                }
             }
         }
 
