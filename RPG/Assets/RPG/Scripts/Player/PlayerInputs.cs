@@ -11,10 +11,16 @@ public class PlayerInputs : MonoBehaviour
     public bool dash;
     public bool jump;
     public bool isWalk;
+    public bool attack;
+
+    PlayerController _controller;
 
     private void Start()
     {
         InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        _controller = GetComponent<PlayerController>();
     }
 
     public void OnMove(InputValue value)
@@ -24,12 +30,26 @@ public class PlayerInputs : MonoBehaviour
 
     public void OnJump(InputValue value)
     {
+        if (_controller.isGrounded == false 
+            || _controller.isAttack == true)
+        {
+            return;
+        }
         jump = value.isPressed;
     }
 
     public void OnDash(InputValue value)
     {
         dash = value.isPressed;
+    }
+
+    public void OnAttack(InputValue value)
+    {
+        if (_controller.isGrounded == false)
+        {
+            return;
+        }
+        attack = value.isPressed;
     }
 
     public void OnChangeWalkRun(InputValue value)

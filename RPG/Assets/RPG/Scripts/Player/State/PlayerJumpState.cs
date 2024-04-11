@@ -23,6 +23,7 @@ public class PlayerJumpState : PlayerState
             return;
         }
 
+        Rotate(false);
         InAir();
     }
 }

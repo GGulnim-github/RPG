@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class PlayerState : State<PlayerStateName, PlayerController>
 {
@@ -9,9 +8,13 @@ public class PlayerState : State<PlayerStateName, PlayerController>
     {
     }
 
-    public void Rotate()
+    public void Rotate(bool useInput = true)
     {
-        Controller.targetRotation = Mathf.Atan2(Controller.Inputs.moveDirection.x, Controller.Inputs.moveDirection.z) * Mathf.Rad2Deg + Controller.cameraTransform.eulerAngles.y;    
+        if (useInput)
+        {
+            Controller.targetRotation = Mathf.Atan2(Controller.Inputs.moveDirection.x, Controller.Inputs.moveDirection.z) * Mathf.Rad2Deg + Controller.cameraTransform.eulerAngles.y;
+        }
+  
         float rotation = Mathf.SmoothDampAngle(Controller.transform.eulerAngles.y, Controller.targetRotation, ref Controller.rotationVelocity, Controller.rotationSmoothTime);
         Controller.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
     }
@@ -30,5 +33,13 @@ public class PlayerState : State<PlayerStateName, PlayerController>
         Vector3 targetDirection = Quaternion.Euler(0.0f, Controller.targetRotation, 0.0f) * Vector3.forward;
         Controller.CharacterController.Move(Controller.targetSpeed * Time.deltaTime * targetDirection.normalized
             + new Vector3(0.0f, Controller.verticalVelocity, 0.0f) * Time.deltaTime);
+    }
+
+    public void UpdateTargetRotation()
+    {
+        if (Controller.Inputs.move != Vector2.zero)
+        {
+            Controller.targetRotation = Mathf.Atan2(Controller.Inputs.moveDirection.x, Controller.Inputs.moveDirection.z) * Mathf.Rad2Deg + Controller.cameraTransform.eulerAngles.y;
+        }
     }
 }

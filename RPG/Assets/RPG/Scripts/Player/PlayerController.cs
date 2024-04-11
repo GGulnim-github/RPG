@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float verticalVelocity;
 
     [HideInInspector] public bool isGrounded = true;
+    [HideInInspector] public bool isAttack = false;
+
     [Space(5)]
     [Header("Ground")]
     public float groundedOffset = -0.14f;
@@ -36,12 +38,20 @@ public class PlayerController : MonoBehaviour
     [Header("Camera")]
     public Transform cameraTransform;
 
+    [Space(5)]
+    [Header("Equip")]
+    public GameObject handSword;
+    public GameObject upperChestSword;
+
     private void Awake()
     {
         Inputs = GetComponent<PlayerInputs>();
 
         Animator = GetComponent<Animator>();
         CharacterController = GetComponent<CharacterController>();
+
+        handSword.SetActive(false);
+        upperChestSword.SetActive(true);
     }
 
     private void Start()

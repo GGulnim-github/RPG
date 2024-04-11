@@ -30,6 +30,12 @@ public class PlayerRunState : PlayerState
             return;
         }
 
+        if (Controller.Inputs.attack == true)
+        {
+            StateMachine.ChangeState(PlayerStateName.Attack1);
+            return;
+        }
+
         if (Controller.Inputs.move == Vector2.zero)
         {
             StateMachine.ChangeState(PlayerStateName.Idle);
