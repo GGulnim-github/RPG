@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFallState : PlayerState
+public class PlayerFallState : PlayerAirState
 {
     public PlayerFallState(StateMachine<PlayerStateName, PlayerController> stateMachine) : base(stateMachine)
     {
@@ -44,7 +44,5 @@ public class PlayerFallState : PlayerState
                 }
             }
         }
-
-        InAir();
     }
 }

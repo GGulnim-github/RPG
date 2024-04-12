@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerJumpState : PlayerState
+public class PlayerJumpState : PlayerAirState
 {
     public PlayerJumpState(StateMachine<PlayerStateName, PlayerController> stateMachine) : base(stateMachine)
     {
@@ -23,8 +23,5 @@ public class PlayerJumpState : PlayerState
             StateMachine.ChangeState(PlayerStateName.Fall);
             return;
         }
-
-        Rotate(false);
-        InAir();
     }
 }

@@ -12,7 +12,8 @@ public class PlayerAttackState : PlayerState
     {
         Controller.isAttack = true;
         Controller.EquipSword();
-        UpdateTargetRotation();
+        Controller.UpdateTargetRotation();
+        Controller.targetSpeed = 0.0f;
     }
 
     public override void OnExit()
@@ -40,37 +41,10 @@ public class PlayerAttackState : PlayerState
                 }
                 else
                 {
-                    if (Controller.Inputs.move == Vector2.zero)
-                    {
-                        StateMachine.ChangeState(PlayerStateName.Idle);
-                        return;
-                    }
-                    else
-                    {
-                        if (Controller.Inputs.dash == true)
-                        {
-                            StateMachine.ChangeState(PlayerStateName.Dash);
-                            return;
-                        }
-                        else
-                        {
-                            if (Controller.Inputs.isWalk == true)
-                            {
-                                StateMachine.ChangeState(PlayerStateName.Walk);
-                                return;
-                            }
-                            else
-                            {
-                                StateMachine.ChangeState(PlayerStateName.Run);
-                                return;
-                            }
-                        }
-                    }
+                    CheckInput();
                 }
             }
         }
-
-        Rotate(false);
     }
 
     public void UpdateLastAttack(string animationName)
@@ -80,35 +54,38 @@ public class PlayerAttackState : PlayerState
             float animationNormalizedTime = Controller.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             if (animationNormalizedTime > 0.99f)
             {
-                if (Controller.Inputs.move == Vector2.zero)
+                CheckInput();
+            }
+        }
+    }
+
+    void CheckInput()
+    {
+        if (Controller.Inputs.move == Vector2.zero)
+        {
+            StateMachine.ChangeState(PlayerStateName.Idle);
+            return;
+        }
+        else
+        {
+            if (Controller.Inputs.dash == true)
+            {
+                StateMachine.ChangeState(PlayerStateName.Dash);
+                return;
+            }
+            else
+            {
+                if (Controller.Inputs.isWalk == true)
                 {
-                    StateMachine.ChangeState(PlayerStateName.Idle);
+                    StateMachine.ChangeState(PlayerStateName.Walk);
                     return;
                 }
                 else
                 {
-                    if (Controller.Inputs.dash == true)
-                    {
-                        StateMachine.ChangeState(PlayerStateName.Dash);
-                        return;
-                    }
-                    else
-                    {
-                        if (Controller.Inputs.isWalk == true)
-                        {
-                            StateMachine.ChangeState(PlayerStateName.Walk);
-                            return;
-                        }
-                        else
-                        {
-                            StateMachine.ChangeState(PlayerStateName.Run);
-                            return;
-                        }
-                    }
+                    StateMachine.ChangeState(PlayerStateName.Run);
+                    return;
                 }
             }
         }
-
-        Rotate(false);
     }
 }

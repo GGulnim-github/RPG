@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : PlayerState
+public class PlayerIdleState : PlayerGroundState
 {
     public PlayerIdleState(StateMachine<PlayerStateName, PlayerController> stateMachine) : base(stateMachine)
     {
@@ -26,51 +26,30 @@ public class PlayerIdleState : PlayerState
         Controller.targetSpeed = 0.0f;
     }
 
-    public override void Update()
+    public override bool CheckMoveInput()
     {
-        if (Controller.isGrounded)
-        {
-            if (Controller.Inputs.jump == true)
-            {
-                StateMachine.ChangeState(PlayerStateName.Jump);
-                return;
-            }
-        }
-        else
-        {
-            StateMachine.ChangeState(PlayerStateName.Fall);
-            return;
-        }
-
-        if (Controller.Inputs.attack == true)
-        {
-            StateMachine.ChangeState(PlayerStateName.Attack1);
-            return;
-        }
-
         if (Controller.Inputs.move != Vector2.zero)
         {
             if (Controller.Inputs.dash == true)
             {
                 StateMachine.ChangeState(PlayerStateName.Dash);
-                return;
+                return true;
             }
             else
             {
                 if (Controller.Inputs.isWalk == true)
                 {
                     StateMachine.ChangeState(PlayerStateName.Walk);
-                    return;
+                    return true;
                 }
                 else
                 {
                     StateMachine.ChangeState(PlayerStateName.Run);
-                    return;
+                    return true;
                 }
             }
         }
 
-        Rotate(false);
-        Move();
+        return false;
     }
 }

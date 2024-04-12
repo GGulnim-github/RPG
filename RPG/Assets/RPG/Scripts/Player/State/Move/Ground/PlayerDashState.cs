@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDashState : PlayerState
+public class PlayerDashState : PlayerGroundState
 {
     public PlayerDashState(StateMachine<PlayerStateName, PlayerController> stateMachine) : base(stateMachine)
     {
@@ -14,32 +14,12 @@ public class PlayerDashState : PlayerState
         Controller.targetSpeed = Controller.dashSpeed;
     }
 
-    public override void Update()
+    public override bool CheckMoveInput()
     {
-        if (Controller.isGrounded)
-        {
-            if (Controller.Inputs.jump == true)
-            {
-                StateMachine.ChangeState(PlayerStateName.Jump);
-                return;
-            }
-        }
-        else
-        {
-            StateMachine.ChangeState(PlayerStateName.Fall);
-            return;
-        }
-
-        if (Controller.Inputs.attack == true)
-        {
-            StateMachine.ChangeState(PlayerStateName.Attack1);
-            return;
-        }
-
         if (Controller.Inputs.move == Vector2.zero)
         {
             StateMachine.ChangeState(PlayerStateName.Idle);
-            return;
+            return true;
         }
         else
         {
@@ -48,17 +28,16 @@ public class PlayerDashState : PlayerState
                 if (Controller.Inputs.isWalk == true)
                 {
                     StateMachine.ChangeState(PlayerStateName.Walk);
-                    return;
+                    return true;
                 }
                 else
                 {
                     StateMachine.ChangeState(PlayerStateName.Run);
-                    return;
+                    return true;
                 }
             }
         }
 
-        Rotate();
-        Move();
+        return false;
     }
 }

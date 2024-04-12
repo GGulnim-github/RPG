@@ -9,9 +9,6 @@ public class PlayerController : MonoBehaviour
     public Animator Animator { get; private set; }
     public CharacterController CharacterController { get; private set; }
 
-    public Vector3 AnimatorDeltaPosition { get; private set; }
-    public Vector3 AnimatorVelocity { get; private set; }
-
     [Header("Player")]
     public float walkSpeed = 1.0f;
     public float runSpeed = 2.2f;
@@ -64,6 +61,7 @@ public class PlayerController : MonoBehaviour
     {
         CheckGround();
         StateMachine.Update();
+        Move();
     }
 
     private void FixedUpdate()
@@ -71,17 +69,12 @@ public class PlayerController : MonoBehaviour
         StateMachine.FixedUpdate();
     }
 
-    private void OnAnimatorMove()
-    {
-        AnimatorDeltaPosition = Animator.deltaPosition;
-        AnimatorVelocity = Animator.velocity;
-    }
-
-    private void CheckGround()
+    void CheckGround()
     {
         if (verticalVelocity > 0.0f)
         {
             isGrounded = false;
+            verticalVelocity += gravity * Time.deltaTime;
             return;
         }
 
@@ -96,6 +89,19 @@ public class PlayerController : MonoBehaviour
                 verticalVelocity = -2f;
             }
         }
+        else
+        {
+            verticalVelocity += gravity * Time.deltaTime;
+        }
+    }
+
+    void Move()
+    {
+        float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, rotationSmoothTime);
+        transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+
+        Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+        CharacterController.Move(targetSpeed * Time.deltaTime * targetDirection.normalized + new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);
     }
 
     public void EquipSword()
@@ -108,5 +114,13 @@ public class PlayerController : MonoBehaviour
     {
         upperChestSword.SetActive(true);
         handSword.SetActive(false);
+    }
+
+    public void UpdateTargetRotation()
+    {
+        if (Inputs.move != Vector2.zero)
+        {
+            targetRotation = Mathf.Atan2(Inputs.moveDirection.x, Inputs.moveDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+        }
     }
 }

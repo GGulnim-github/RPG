@@ -14,8 +14,6 @@ public class PlayerAttack1State : PlayerAttackState
 
         Controller.EquipSword();
         Controller.Animator.CrossFadeInFixedTime("WGS_attackA1", 0.1f);
-
-
     }
 
     public override void Update()
