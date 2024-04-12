@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +50,7 @@ public class PlayerInputs : MonoBehaviour
         {
             return;
         }
+
         attack = value.isPressed;
     }
 
@@ -62,5 +64,4 @@ public class PlayerInputs : MonoBehaviour
         move = value;
         moveDirection = new Vector3(move.x, 0.0f, move.y).normalized;
     }
-
 }

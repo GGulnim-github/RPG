@@ -18,8 +18,6 @@ public class PlayerStateMachine : StateMachine<PlayerStateName, PlayerController
         AddState(PlayerStateName.Attack1, new PlayerAttack1State(this));
         AddState(PlayerStateName.Attack2, new PlayerAttack2State(this));
         AddState(PlayerStateName.Attack3, new PlayerAttack3State(this));
-        AddState(PlayerStateName.Attack4, new PlayerAttack4State(this));
-        AddState(PlayerStateName.Attack5, new PlayerAttack5State(this));
 
         ChangeState(PlayerStateName.Idle, true);
     }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -95,5 +96,17 @@ public class PlayerController : MonoBehaviour
                 verticalVelocity = -2f;
             }
         }
+    }
+
+    public void EquipSword()
+    {
+        upperChestSword.SetActive(false);
+        handSword.SetActive(true);
+    }
+
+    public void UnequipSword()
+    {
+        upperChestSword.SetActive(true);
+        handSword.SetActive(false);
     }
 }

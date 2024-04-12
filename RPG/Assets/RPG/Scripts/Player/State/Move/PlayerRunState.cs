@@ -11,6 +11,7 @@ public class PlayerRunState : PlayerState
     public override void OnEnter()
     {
         Controller.Animator.CrossFadeInFixedTime("RunA_front@loop", 0.1f);
+        
         Controller.targetSpeed = Controller.runSpeed;
     }
 

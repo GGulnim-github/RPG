@@ -11,6 +11,7 @@ public class PlayerJumpState : PlayerState
     public override void OnEnter()
     {
         Controller.Animator.CrossFadeInFixedTime("Jump_Fly@loop", 0.1f);
+        
         Controller.Inputs.jump = false;
         Controller.verticalVelocity = Mathf.Sqrt(Controller.jumpHeight * -2f * Controller.gravity);
     }

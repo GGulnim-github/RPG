@@ -18,10 +18,6 @@ public class PlayerIdleState : PlayerState
         {
             Controller.Animator.CrossFadeInFixedTime("Jump_ToStandC", 0.1f);
         }
-        else if (StateMachine.PreviousStateName == PlayerStateName.Attack5)
-        {
-            Controller.Animator.CrossFadeInFixedTime("WGS_attackA5toStand", 0.1f);
-        }
         else
         {
             Controller.Animator.CrossFadeInFixedTime("StandA@loop", 0.1f);
