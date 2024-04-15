@@ -183,6 +183,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f5c2f3308223ea4cab367b9b1138998, type: 3}
+--- !u!1 &418508845813188909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4826168374097883952, guid: 3f5c2f3308223ea4cab367b9b1138998,
+    type: 3}
+  m_PrefabInstance: {fileID: 5131615393782823453}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3717033520734616382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8404463782369345827, guid: 3f5c2f3308223ea4cab367b9b1138998,
@@ -450,6 +456,11 @@ PrefabInstance:
     - target: {fileID: 3349941097944643052, guid: 485d662c63590f74dac20be0cf684019,
         type: 3}
       propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3349941097944643052, guid: 485d662c63590f74dac20be0cf684019,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3460500875827598349, guid: 485d662c63590f74dac20be0cf684019,
@@ -982,6 +993,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8347032502207345964, guid: 485d662c63590f74dac20be0cf684019,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8397928831939239369, guid: 485d662c63590f74dac20be0cf684019,
         type: 3}
       propertyPath: m_Layer
@@ -1116,6 +1132,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8325498140835982051}
   m_SourcePrefab: {fileID: 100100000, guid: 485d662c63590f74dac20be0cf684019, type: 3}
+--- !u!1 &2009977484950723032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5964552296153919547, guid: 485d662c63590f74dac20be0cf684019,
+    type: 3}
+  m_PrefabInstance: {fileID: 5269923402063014371}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3584806012328003189 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8691188044625424278, guid: 485d662c63590f74dac20be0cf684019,
@@ -1230,12 +1252,15 @@ MonoBehaviour:
   rotationVelocity: -5.4523177
   verticalVelocity: -2
   isGrounded: 1
+  isAttack: 0
   groundedOffset: -0.14
   groundedRadius: 0.28
   groundLayers:
     serializedVersion: 2
     m_Bits: 65
   cameraTransform: {fileID: 0}
+  handSword: {fileID: 2009977484950723032}
+  upperChestSword: {fileID: 418508845813188909}
 --- !u!4 &9077630764308483947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3808002924755822216, guid: 485d662c63590f74dac20be0cf684019,

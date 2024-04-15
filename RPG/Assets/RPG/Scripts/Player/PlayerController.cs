@@ -1,10 +1,13 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem.XR;
+﻿using System;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
+    
     public PlayerInputs Inputs { get; private set; }
+    public PlayerStat Stat { get; private set; }
+    public PlayerAttack Attack { get; private set; }
 
     public Animator Animator { get; private set; }
     public CharacterController CharacterController { get; private set; }
@@ -23,8 +26,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float rotationVelocity;
     [HideInInspector] public float verticalVelocity;
 
-    [HideInInspector] public bool isGrounded = true;
-    [HideInInspector] public bool isAttack = false;
+    [NonSerialized] public bool isGrounded = true;
+    [NonSerialized] public bool isAttack = false;
+    [NonSerialized] public bool isDie = false;
 
     [Space(5)]
     [Header("Ground")]
@@ -41,9 +45,13 @@ public class PlayerController : MonoBehaviour
     public GameObject handSword;
     public GameObject upperChestSword;
 
+    public PlayerAttack weapon;
+
     private void Awake()
     {
         Inputs = GetComponent<PlayerInputs>();
+        Stat = GetComponent<PlayerStat>();
+        Attack = GetComponent<PlayerAttack>();
 
         Animator = GetComponent<Animator>();
         CharacterController = GetComponent<CharacterController>();
