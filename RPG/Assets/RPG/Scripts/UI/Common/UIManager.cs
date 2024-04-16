@@ -38,7 +38,6 @@ public class UIManager : Manager<UIManager>
         {
             screen = CreateUI(typeof(T).Name).GetComponent<T>();
             AddUI(screen);
-            //_uiDictionary.Add(typeof(T).Name, screen);
         }
         
         if (_uiList.Contains(screen) == false)

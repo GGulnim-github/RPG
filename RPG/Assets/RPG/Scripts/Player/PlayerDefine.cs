@@ -10,3 +10,9 @@ public enum PlayerStateName
     Attack2,
     Attack3,
 }
+
+public enum PlayerStatType
+{
+    HP,
+    MP,
+}

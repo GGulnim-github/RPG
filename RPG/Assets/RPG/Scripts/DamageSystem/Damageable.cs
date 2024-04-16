@@ -5,10 +5,17 @@ using UnityEngine.Events;
 
 public class Damageable : MonoBehaviour
 {
-    public UnityEvent OnReciveDamage;
+    public Transform damagePos;
+
+    public UnityAction<uint> OnReciveDamageAction;
 
     public void ReciveDamage(uint damage)
     {
-        Debug.Log($"Damage = {damage}");
+        if (damagePos != null)
+        {
+            UIHudManager.Instance.PlayDamageText(damagePos, damage);
+        }
+
+        OnReciveDamageAction?.Invoke(damage);
     }
 }

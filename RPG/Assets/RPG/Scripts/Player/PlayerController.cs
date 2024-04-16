@@ -1,8 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)]
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
+
     [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
     
     public PlayerInputs Inputs { get; private set; }
@@ -45,10 +48,10 @@ public class PlayerController : MonoBehaviour
     public GameObject handSword;
     public GameObject upperChestSword;
 
-    public PlayerAttack weapon;
-
     private void Awake()
     {
+        Instance = this;
+
         Inputs = GetComponent<PlayerInputs>();
         Stat = GetComponent<PlayerStat>();
         Attack = GetComponent<PlayerAttack>();
@@ -58,6 +61,8 @@ public class PlayerController : MonoBehaviour
 
         handSword.SetActive(false);
         upperChestSword.SetActive(true);
+
+        Stat.Initialize(2);
     }
 
     private void Start()

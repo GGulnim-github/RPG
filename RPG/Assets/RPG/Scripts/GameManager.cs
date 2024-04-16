@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[DefaultExecutionOrder(-10)]
+[DefaultExecutionOrder(-100)]
 public class GameManager : PersistentSingleton<GameManager>
 {
     protected override void Awake()
@@ -13,5 +13,7 @@ public class GameManager : PersistentSingleton<GameManager>
         ApplicationManager.Instance.Initialize();
         SoundManager.Instance.Initialize();
         UIManager.Instance.Initialize();
+        UIHudManager.Instance.Initialize();
+        DataManager.Instance.Initialize();
     }
 }
