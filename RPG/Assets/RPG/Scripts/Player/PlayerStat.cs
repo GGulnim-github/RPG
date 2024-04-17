@@ -18,6 +18,9 @@ public class PlayerStat : MonoBehaviour
             UpdateMaxHP();
             UpdateMaxMP();
             MaxEXP = levelData.exp;
+
+            UIPlayerManager ui = UIPlayerManager.Instance;
+            ui.UpdateLevelText(_level);
         }
     }
 
@@ -36,12 +39,9 @@ public class PlayerStat : MonoBehaviour
             {
                 CurrentHP = _maxHP;
             }
-            
-            UIGameScreen gameScreen = UIManager.Instance.GetUI<UIGameScreen>();
-            if (gameScreen != null )
-            {
-                gameScreen.hpSlider.SetMaxValue(_maxHP);
-            }
+
+            UIPlayerManager ui = UIPlayerManager.Instance;
+            ui.UpdateMaxStat(PlayerStatType.HP, _maxHP);
         }
     }
 
@@ -58,11 +58,8 @@ public class PlayerStat : MonoBehaviour
 
             _currentHP = value;
 
-            UIGameScreen gameScreen = UIManager.Instance.GetUI<UIGameScreen>();
-            if (gameScreen != null)
-            {
-                gameScreen.hpSlider.SetValue(_currentHP);
-            }
+            UIPlayerManager ui = UIPlayerManager.Instance;
+            ui.UpdateCurrentStat(PlayerStatType.HP, _currentHP);
         }
     }
 
@@ -79,11 +76,8 @@ public class PlayerStat : MonoBehaviour
                 CurrentMP = _maxMP;
             }
 
-            UIGameScreen gameScreen = UIManager.Instance.GetUI<UIGameScreen>();
-            if (gameScreen != null)
-            {
-                gameScreen.mpSlider.SetMaxValue(_maxMP);
-            }
+            UIPlayerManager ui = UIPlayerManager.Instance;
+            ui.UpdateMaxStat(PlayerStatType.MP, _maxMP);
         }
     }
 
@@ -100,11 +94,8 @@ public class PlayerStat : MonoBehaviour
 
             _currentMP = value;
 
-            UIGameScreen gameScreen = UIManager.Instance.GetUI<UIGameScreen>();
-            if (gameScreen != null)
-            {
-                gameScreen.mpSlider.SetValue(_currentMP);
-            }
+            UIPlayerManager ui = UIPlayerManager.Instance;
+            ui.UpdateCurrentStat(PlayerStatType.MP, _currentMP);
         }
     }
 
@@ -116,10 +107,8 @@ public class PlayerStat : MonoBehaviour
         {
             _maxEXP = value;
 
-            UIGameScreen gameScreen = UIManager.Instance.GetUI<UIGameScreen>();
-            if (gameScreen != null)
-            {
-            }
+            UIPlayerManager ui = UIPlayerManager.Instance;
+            ui.UpdateMaxEXP(_maxEXP);
         }
     }
 
@@ -131,19 +120,48 @@ public class PlayerStat : MonoBehaviour
         {
             _currentEXP = value;
 
-            UIGameScreen gameScreen = UIManager.Instance.GetUI<UIGameScreen>();
-            if (gameScreen != null)
+            UIPlayerManager ui = UIPlayerManager.Instance;
+            if (Level == DataManager.Instance.MaxLevel)
             {
+                ui.UpdateCurrentEXP(_maxEXP);
+                ui.UpdateEXPPercentageText(EXPPercent);
+            }
+            else
+            {
+                ui.UpdateCurrentEXP(_currentEXP);
+                ui.UpdateEXPPercentageText(EXPPercent);
             }
         }
     }
 
-    public uint attack = 10;
-    public uint currentAttack = 10;
+    public float EXPPercent
+    {
+        get
+        {
+            float percent;
+            if (Level == DataManager.Instance.MaxLevel)
+            {
+                percent = 1f;
+            }
+            else
+            {
+                percent = _currentEXP / (float)_maxEXP;
+            }
+            return percent;
+        }
+    }
 
-    public void Initialize(uint level)
+    public uint attack;
+    public uint currentAttack;
+
+    public void Initialize(uint level, uint currentEXP)
     {
         Level = level;
+
+        CurrentHP = MaxHP;
+        CurrentMP = MaxMP;
+
+        CurrentEXP = currentEXP;
     }
 
     public void UpdateMaxHP()
@@ -154,5 +172,37 @@ public class PlayerStat : MonoBehaviour
     public void UpdateMaxMP()
     {
         MaxMP = levelData.mp;
+    }
+
+    public void Levelup(uint remainEXP = 0)
+    {
+        Level++;
+
+        CurrentHP = MaxHP;
+        CurrentMP = MaxMP;
+        
+        CurrentEXP = 0;
+        AddEXP(remainEXP);
+    }
+
+    public void AddEXP(uint exp)
+    {
+        if (Level == DataManager.Instance.MaxLevel)
+        {
+            return;
+        }
+        uint tempEXP = CurrentEXP + exp;
+        if (tempEXP >= MaxEXP)
+        {
+            if (Level < DataManager.Instance.MaxLevel)
+            {
+                uint remainEXP = tempEXP - MaxEXP;
+                Levelup(remainEXP);
+            }
+        }
+        else
+        {
+            CurrentEXP = tempEXP;
+        }
     }
 }

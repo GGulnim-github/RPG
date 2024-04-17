@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         handSword.SetActive(false);
         upperChestSword.SetActive(true);
 
-        Stat.Initialize(2);
+        Stat.Initialize(1, 0);
     }
 
     private void Start()
@@ -135,5 +135,10 @@ public class PlayerController : MonoBehaviour
         {
             targetRotation = Mathf.Atan2(Inputs.moveDirection.x, Inputs.moveDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
         }
+    }
+
+    public void AddExp(uint exp)
+    {
+        Stat.AddEXP(exp);
     }
 }

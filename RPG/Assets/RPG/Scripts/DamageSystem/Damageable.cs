@@ -16,6 +16,7 @@ public class Damageable : MonoBehaviour
             UIHudManager.Instance.PlayDamageText(damagePos, damage);
         }
 
+        PlayerController.Instance.AddExp(damage * 40);
         OnReciveDamageAction?.Invoke(damage);
     }
 }
