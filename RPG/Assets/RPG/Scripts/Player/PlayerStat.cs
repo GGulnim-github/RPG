@@ -17,9 +17,9 @@ public class PlayerStat : MonoBehaviour
 
             UpdateMaxHP();
             UpdateMaxMP();
-            MaxEXP = levelData.exp;
+            MaxEXP = levelData.EXP;
 
-            UIPlayerManager ui = UIPlayerManager.Instance;
+            PlayerManager ui = PlayerManager.Instance;
             ui.UpdateLevelText(_level);
         }
     }
@@ -40,7 +40,7 @@ public class PlayerStat : MonoBehaviour
                 CurrentHP = _maxHP;
             }
 
-            UIPlayerManager ui = UIPlayerManager.Instance;
+            PlayerManager ui = PlayerManager.Instance;
             ui.UpdateMaxStat(PlayerStatType.HP, _maxHP);
         }
     }
@@ -58,7 +58,7 @@ public class PlayerStat : MonoBehaviour
 
             _currentHP = value;
 
-            UIPlayerManager ui = UIPlayerManager.Instance;
+            PlayerManager ui = PlayerManager.Instance;
             ui.UpdateCurrentStat(PlayerStatType.HP, _currentHP);
         }
     }
@@ -76,7 +76,7 @@ public class PlayerStat : MonoBehaviour
                 CurrentMP = _maxMP;
             }
 
-            UIPlayerManager ui = UIPlayerManager.Instance;
+            PlayerManager ui = PlayerManager.Instance;
             ui.UpdateMaxStat(PlayerStatType.MP, _maxMP);
         }
     }
@@ -94,7 +94,7 @@ public class PlayerStat : MonoBehaviour
 
             _currentMP = value;
 
-            UIPlayerManager ui = UIPlayerManager.Instance;
+            PlayerManager ui = PlayerManager.Instance;
             ui.UpdateCurrentStat(PlayerStatType.MP, _currentMP);
         }
     }
@@ -107,7 +107,7 @@ public class PlayerStat : MonoBehaviour
         {
             _maxEXP = value;
 
-            UIPlayerManager ui = UIPlayerManager.Instance;
+            PlayerManager ui = PlayerManager.Instance;
             ui.UpdateMaxEXP(_maxEXP);
         }
     }
@@ -120,7 +120,7 @@ public class PlayerStat : MonoBehaviour
         {
             _currentEXP = value;
 
-            UIPlayerManager ui = UIPlayerManager.Instance;
+            PlayerManager ui = PlayerManager.Instance;
             if (Level == DataManager.Instance.MaxLevel)
             {
                 ui.UpdateCurrentEXP(_maxEXP);
@@ -166,12 +166,12 @@ public class PlayerStat : MonoBehaviour
 
     public void UpdateMaxHP()
     {
-        MaxHP = levelData.hp;
+        MaxHP = levelData.HP;
     }
 
     public void UpdateMaxMP()
     {
-        MaxMP = levelData.mp;
+        MaxMP = levelData.MP;
     }
 
     public void Levelup(uint remainEXP = 0)

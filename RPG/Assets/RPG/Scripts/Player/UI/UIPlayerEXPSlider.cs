@@ -14,7 +14,7 @@ public class UIPlayerEXPSlider : MonoBehaviour
 
     private void OnEnable()
     {
-        UIPlayerManager ui = UIPlayerManager.Instance;
+        PlayerManager ui = PlayerManager.Instance;
         if (ui)
         {
             ui.AddExpSlider(this);
@@ -30,7 +30,7 @@ public class UIPlayerEXPSlider : MonoBehaviour
 
     private void OnDisable()
     {
-        UIPlayerManager ui = UIPlayerManager.Instance;
+        PlayerManager ui = PlayerManager.Instance;
         if (ui)
         {
             ui.RemoveEXPSlier();

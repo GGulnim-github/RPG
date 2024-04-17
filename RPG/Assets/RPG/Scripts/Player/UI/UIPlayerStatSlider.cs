@@ -20,7 +20,7 @@ public class UIPlayerStatSlider : MonoBehaviour
 
     private void OnEnable()
     {
-        UIPlayerManager ui = UIPlayerManager.Instance;
+        PlayerManager ui = PlayerManager.Instance;
         if (ui)
         {
             ui.AddStatSlider(stateType, this);
@@ -45,7 +45,7 @@ public class UIPlayerStatSlider : MonoBehaviour
 
     private void OnDisable()
     {
-        UIPlayerManager ui = UIPlayerManager.Instance;
+        PlayerManager ui = PlayerManager.Instance;
         if (ui)
         {
             ui.RemoveStatSlider(stateType, this);

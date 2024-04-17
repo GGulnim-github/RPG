@@ -38,7 +38,7 @@ public class PlayerAttack : MonoBehaviour
 
     void CheckDamage(Collider other)
     {
-        Damageable d = other.GetComponent<Damageable>();
+        Monster d = other.GetComponent<Monster>();
         
         if (d == null)
         {

@@ -6,14 +6,14 @@ using UnityEngine;
 [Serializable]
 public class LevelData
 {
-    public uint hp;
-    public uint mp;
-    public uint exp;
+    public uint HP;
+    public uint MP;
+    public uint EXP;
 
     public LevelData(uint hp, uint mp, uint exp)
     {
-        this.hp = hp;
-        this.mp = mp;
-        this.exp = exp;
+        this.HP = hp;
+        this.MP = mp;
+        this.EXP = exp;
     }
 }

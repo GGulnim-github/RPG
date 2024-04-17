@@ -13,7 +13,7 @@ public class GameManager : PersistentSingleton<GameManager>
         ApplicationManager.Instance.Initialize();
         SoundManager.Instance.Initialize();
         UIManager.Instance.Initialize();
-        UIHudManager.Instance.Initialize();
+        HUDManager.Instance.Initialize();
         DataManager.Instance.Initialize();
     }
 }

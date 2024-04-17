@@ -15,7 +15,7 @@ public class UIPlayerEXPPercentageText : MonoBehaviour
 
     private void OnEnable()
     {
-        UIPlayerManager ui = UIPlayerManager.Instance;
+        PlayerManager ui = PlayerManager.Instance;
         if (ui)
         {
             ui.AddEXPPercentageText(this);
@@ -30,7 +30,7 @@ public class UIPlayerEXPPercentageText : MonoBehaviour
 
     private void OnDisable()
     {
-        UIPlayerManager ui = UIPlayerManager.Instance;
+        PlayerManager ui = PlayerManager.Instance;
         if (ui)
         {
             ui.RemoveEXPPercentageText(this);

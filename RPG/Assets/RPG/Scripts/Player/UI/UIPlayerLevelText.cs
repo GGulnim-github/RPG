@@ -14,7 +14,7 @@ public class UIPlayerLevelText : MonoBehaviour
 
     private void OnEnable()
     {
-        UIPlayerManager ui = UIPlayerManager.Instance;
+        PlayerManager ui = PlayerManager.Instance;
 
 
         if (ui)
@@ -31,7 +31,7 @@ public class UIPlayerLevelText : MonoBehaviour
 
     private void OnDisable()
     {
-        UIPlayerManager ui = UIPlayerManager.Instance;
+        PlayerManager ui = PlayerManager.Instance;
         if (ui)
         {
             ui.RemoveLevelText(this);
