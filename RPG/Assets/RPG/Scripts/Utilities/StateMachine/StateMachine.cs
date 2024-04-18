@@ -50,7 +50,7 @@ public class StateMachine<StateName, StateController> where StateName : Enum whe
         }
     }
 
-    public void ChangeState(StateName stateName, bool first = false)
+    public void ChangeState(StateName stateName)
     {
         if (_states.ContainsKey(stateName) == false)
         {

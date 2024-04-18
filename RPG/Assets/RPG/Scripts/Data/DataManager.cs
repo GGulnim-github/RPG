@@ -14,7 +14,5 @@ public class DataManager : Manager<DataManager>
     {
         level = Resources.Load<LevelDataSO>("Data/LevelData");
     }
-
-
 }
 

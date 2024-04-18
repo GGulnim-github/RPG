@@ -608,6 +608,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4772368446013660862, guid: 485d662c63590f74dac20be0cf684019,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.size
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4791768734195119025, guid: 485d662c63590f74dac20be0cf684019,
         type: 3}
       propertyPath: m_Layer
@@ -1122,6 +1127,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8347032502207345964, guid: 485d662c63590f74dac20be0cf684019,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 3475612143676791744}
+    - targetCorrespondingSourceObject: {fileID: 8347032502207345964, guid: 485d662c63590f74dac20be0cf684019,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 597799926051091886}
     - targetCorrespondingSourceObject: {fileID: 8347032502207345964, guid: 485d662c63590f74dac20be0cf684019,
         type: 3}
@@ -1131,6 +1140,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8325498140835982051}
+    - targetCorrespondingSourceObject: {fileID: 8347032502207345964, guid: 485d662c63590f74dac20be0cf684019,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 57901636274736956}
+    - targetCorrespondingSourceObject: {fileID: 8347032502207345964, guid: 485d662c63590f74dac20be0cf684019,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2444244378381895732}
   m_SourcePrefab: {fileID: 100100000, guid: 485d662c63590f74dac20be0cf684019, type: 3}
 --- !u!1 &2009977484950723032 stripped
 GameObject:
@@ -1175,6 +1192,29 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.03
   m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!136 &3475612143676791744
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248049758906522831}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &597799926051091886
 MonoBehaviour:
@@ -1251,16 +1291,57 @@ MonoBehaviour:
   targetRotation: 82.20386
   rotationVelocity: -5.4523177
   verticalVelocity: -2
-  isGrounded: 1
-  isAttack: 0
   groundedOffset: -0.14
   groundedRadius: 0.28
   groundLayers:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 193
   cameraTransform: {fileID: 0}
   handSword: {fileID: 2009977484950723032}
   upperChestSword: {fileID: 418508845813188909}
+--- !u!114 &57901636274736956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248049758906522831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ebc7b35f35bd3545baab882729f3c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelData:
+    HP: 0
+    MP: 0
+    EXP: 0
+  _level: 0
+  _maxHP: 0
+  _currentHP: 0
+  _maxMP: 0
+  _currentMP: 0
+  _maxEXP: 0
+  _currentEXP: 0
+  attack: 10
+  currentAttack: 10
+--- !u!114 &2444244378381895732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248049758906522831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b38b7375fce6b74eb12fd5a8b395e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  offset: {x: 0, y: 0.5, z: 0}
+  radius: 1.2
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!4 &9077630764308483947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3808002924755822216, guid: 485d662c63590f74dac20be0cf684019,

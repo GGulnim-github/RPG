@@ -1,5 +1,9 @@
-public enum MonsterType
+public enum MonsterStateName
 {
-    General,
-    Boss
+    Idle,
+    Move,
+    Chase,
+    Attack,
+    Damage,
+    Die
 }

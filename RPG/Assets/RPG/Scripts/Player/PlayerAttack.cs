@@ -32,20 +32,15 @@ public class PlayerAttack : MonoBehaviour
             Collider col = _raycastHits[i].collider;
 
             if (col != null)
-                CheckDamage(col);
-        }
-    }
+            {
+                if (!col.TryGetComponent<MonsterController>(out var monster))
+                {
+                    return;
+                }
 
-    void CheckDamage(Collider other)
-    {
-        Monster d = other.GetComponent<Monster>();
-        
-        if (d == null)
-        {
-            return;
+                monster.ReciveDamage(damage, gameObject.GetComponent<PlayerController>());
+            }
         }
-
-        d.ReciveDamage(damage);
     }
 
 #if UNITY_EDITOR
