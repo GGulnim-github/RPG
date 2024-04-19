@@ -6,8 +6,6 @@ public class MonsterAttackState : MonsterState
 {
     float _targetAngle;
 
-    float _currentStateTime;
-
     public MonsterAttackState(StateMachine<MonsterStateName, MonsterController> stateMachine) : base(stateMachine)
     {
     }
@@ -15,8 +13,6 @@ public class MonsterAttackState : MonsterState
     public override void OnEnter()
     {
         Controller.Animator.CrossFadeInFixedTime("Attack", 0.1f);
-
-        _currentStateTime = 0;
 
         Controller.NavMeshAgent.stoppingDistance = 0f;
         Controller.NavMeshAgent.destination = Controller.transform.position;
@@ -28,8 +24,6 @@ public class MonsterAttackState : MonsterState
 
     public override void Update()
     {
-        _currentStateTime += Time.deltaTime;
-
         if (!Controller.target)
         {
             StateMachine.ChangeState(MonsterStateName.Move);
@@ -40,10 +34,13 @@ public class MonsterAttackState : MonsterState
         float angle = Mathf.SmoothDampAngle(currentAngle, _targetAngle, ref Controller.rotationVelocity, Controller.rotationSmoothTime);
         Controller.transform.rotation = Quaternion.Euler(0, angle, 0);
 
-        if (_currentStateTime > Controller.attackDelay)
+        if (Controller.Animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
-            StateMachine.ChangeState(MonsterStateName.Chase);
-            return;
+            float animationNormalizedTime = Controller.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (animationNormalizedTime > 0.99f)
+            {
+                StateMachine.ChangeState(MonsterStateName.AttackIdle);
+            }
         }
     }
 }

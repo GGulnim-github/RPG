@@ -4,6 +4,7 @@ public enum MonsterStateName
     Move,
     Chase,
     Attack,
+    AttackIdle,
     Damage,
     Die
 }

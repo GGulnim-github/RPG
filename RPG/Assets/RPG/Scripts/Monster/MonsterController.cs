@@ -11,6 +11,10 @@ public class MonsterController : MonoBehaviour
 
     public Animator Animator { get; private set; }
     public NavMeshAgent NavMeshAgent { get; private set; }
+    public Collider Collider { get; private set; }
+    public SkinnedMeshRenderer SkinnedMeshRenderer { get; private set; }
+    Material originalMaterial;
+    public Material dissolveMaterial;
 
     uint _currentHP;
     uint CurrentHP
@@ -20,9 +24,17 @@ public class MonsterController : MonoBehaviour
         {
             _currentHP = value;
             hud.hpSlider.value = _currentHP;
+            
             if (_currentHP == 0)
             {
-                Debug.Log("Die");
+                NavMeshAgent.enabled = false;
+
+                SkinnedMeshRenderer.material = dissolveMaterial;
+                dissolve = 0;
+                SkinnedMeshRenderer.material.SetFloat("_Dissolve", dissolve);
+                StateMachine.ChangeState(MonsterStateName.Die);
+
+                Invoke(nameof(StartDissolve), 1f);
             }
         }
     }
@@ -31,6 +43,7 @@ public class MonsterController : MonoBehaviour
 
     public float idleExitMinTime = 1f;
     public float idleExitMaxTime = 3f;
+    public float reviveTime = 5f;
 
     public float moveRadius;
     public float findRadius;
@@ -41,20 +54,29 @@ public class MonsterController : MonoBehaviour
     public LayerMask targetLayerMask;
     Vector3 _rayOffset = new Vector3(0, 0.1f, 0);
 
-    [HideInInspector] public Vector3 spawnPos;
+    [HideInInspector] public Vector3 firstSpawnPos;
     [HideInInspector] public PlayerController target;
     [HideInInspector] public float rotationVelocity;
+    [HideInInspector] public Vector3? lastDestination;
+
+    float dissolve = 0;
+    bool isDissolve = false;
 
     private void Awake()
     {
         Animator = GetComponent<Animator>();
         NavMeshAgent = GetComponent<NavMeshAgent>();
+        Collider = GetComponent<Collider>();
+        SkinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        originalMaterial = SkinnedMeshRenderer.material;
 
-        hud.Initialize(data.Level, data.Name, data.HP);
-        _currentHP = data.HP;
+        firstSpawnPos = transform.position;
+
+        Collider.isTrigger = false;
+        CurrentHP = data.HP;
         hud.gameObject.SetActive(false);
 
-        spawnPos = transform.position;
+        transform.eulerAngles = new Vector3(0f, Random.Range(0, 360f),0f);
     }
 
     private void Start()
@@ -65,6 +87,39 @@ public class MonsterController : MonoBehaviour
     private void Update()
     {
         StateMachine.Update();
+
+        if (isDissolve == true)
+        {
+            dissolve += Time.deltaTime;
+            SkinnedMeshRenderer.material.SetFloat("_Dissolve", dissolve);
+        }
+    }
+
+    public void StartDissolve()
+    {
+        isDissolve = true;
+    }
+
+    public void Revive()
+    {
+        isDissolve = false;
+        NavMeshAgent.enabled = true;
+        SkinnedMeshRenderer.material = originalMaterial;
+
+        if (lastDestination == null)
+        {
+            transform.position = firstSpawnPos;
+        }
+        else
+        {
+            transform.position = lastDestination.Value;
+        }
+
+        Collider.isTrigger = false;
+        CurrentHP = data.HP;
+        hud.gameObject.SetActive(false);
+        StateMachine.ChangeState(MonsterStateName.Idle);
+        transform.eulerAngles = new Vector3(0f, Random.Range(0, 360f), 0f);
     }
 
     public void ReciveDamage(uint damage, PlayerController attackPlayer)
@@ -79,19 +134,20 @@ public class MonsterController : MonoBehaviour
         if (damage >= CurrentHP)
         {
             CurrentHP = 0;
+            return;
         }
         else
         {
             CurrentHP -= damage;
         }
 
-        if (StateMachine.CurrentStateName == MonsterStateName.Idle || StateMachine.CurrentStateName == MonsterStateName.Move)
+        target = attackPlayer;
+
+        if (StateMachine.CurrentStateName != MonsterStateName.Attack && StateMachine.CurrentStateName != MonsterStateName.Damage)
         {
-            target = attackPlayer;
-            StateMachine.ChangeState(MonsterStateName.Chase);
+            StateMachine.ChangeState(MonsterStateName.Damage);
         }
 
-        Animator.CrossFadeInFixedTime("Damage", 0.1f);
     }
 
     public bool FindTarget()
@@ -110,7 +166,7 @@ public class MonsterController : MonoBehaviour
             {
                 if (hit.transform.TryGetComponent(out target))
                 {
-                    if (IsPointWithinRadius(spawnPos, chaseRadius, target.transform.position))
+                    if (IsPointWithinRadius(firstSpawnPos, chaseRadius, target.transform.position))
                     {
                         return true;
                     }
@@ -136,10 +192,10 @@ public class MonsterController : MonoBehaviour
         if (Application.isPlaying)
         {
             UnityEditor.Handles.color = Color.green;
-            UnityEditor.Handles.DrawWireDisc(spawnPos + _rayOffset, Vector3.up, moveRadius, 1f);
+            UnityEditor.Handles.DrawWireDisc(firstSpawnPos + _rayOffset, Vector3.up, moveRadius, 1f);
 
             UnityEditor.Handles.color = Color.yellow;
-            UnityEditor.Handles.DrawWireDisc(spawnPos + _rayOffset, Vector3.up, chaseRadius, 1f);
+            UnityEditor.Handles.DrawWireDisc(firstSpawnPos + _rayOffset, Vector3.up, chaseRadius, 1f);
         }
         else
         {

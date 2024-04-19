@@ -12,6 +12,7 @@ public class MonsterStateMachine : StateMachine<MonsterStateName, MonsterControl
         AddState(MonsterStateName.Move, new MonsterMoveState(this));
         AddState(MonsterStateName.Chase, new MonsterChaseState(this));
         AddState(MonsterStateName.Attack, new MonsterAttackState(this));
+        AddState(MonsterStateName.AttackIdle, new MonsterAttackIdleState(this));
         AddState(MonsterStateName.Damage, new MonsterDamageState(this));
         AddState(MonsterStateName.Die, new MonsterDieState(this));
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class MonsterMoveState : MonsterState
 {
@@ -16,7 +17,10 @@ public class MonsterMoveState : MonsterState
 
         Controller.NavMeshAgent.stoppingDistance = 0f;
         Vector2 movePos = Random.insideUnitCircle * Controller.moveRadius;
-        Controller.NavMeshAgent.destination = Controller.spawnPos + new Vector3(movePos.x, 0f, movePos.y);
+        Controller.NavMeshAgent.destination = Controller.firstSpawnPos + new Vector3(movePos.x, 0f, movePos.y);
+        Controller.lastDestination = Controller.NavMeshAgent.destination;
+
+        Controller.hud.gameObject.SetActive(false);
     }
 
     public override void Update()

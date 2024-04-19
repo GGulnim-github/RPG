@@ -10,6 +10,18 @@ public class MonsterDamageState : MonsterState
 
     public override void OnEnter()
     {
-        Controller.Animator.CrossFadeInFixedTime("Damage", 0.1f);
+        Controller.Animator.Play("Damage");
+    }
+
+    public override void Update()
+    {
+        if (Controller.Animator.GetCurrentAnimatorStateInfo(0).IsName("Damage"))
+        {
+            float animationNormalizedTime = Controller.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (animationNormalizedTime > 0.99f)
+            {
+                StateMachine.ChangeState(MonsterStateName.Chase);
+            }
+        }
     }
 }

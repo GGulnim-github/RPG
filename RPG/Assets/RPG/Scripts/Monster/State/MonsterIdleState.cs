@@ -13,7 +13,14 @@ public class MonsterIdleState : MonsterState
 
     public override void OnEnter()
     {
-        Controller.Animator.CrossFadeInFixedTime("Idle", 0.1f);
+        if (StateMachine.PreviousStateName == MonsterStateName.Die)
+        {
+            Controller.Animator.Play("Idle");
+        }
+        else
+        {
+            Controller.Animator.CrossFadeInFixedTime("Idle", 0.1f);
+        }
 
         Controller.target = null;
 
@@ -22,6 +29,8 @@ public class MonsterIdleState : MonsterState
 
         Controller.NavMeshAgent.stoppingDistance = 0f;
         Controller.NavMeshAgent.destination = Controller.transform.position;
+        
+        Controller.hud.gameObject.SetActive(false);
     }
 
     public override void Update()

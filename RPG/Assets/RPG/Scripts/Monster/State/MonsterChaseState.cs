@@ -24,7 +24,7 @@ public class MonsterChaseState : MonsterState
             return;
         }
 
-        if (Controller.IsPointWithinRadius(Controller.spawnPos, Controller.chaseRadius, Controller.target.transform.position) == false)
+        if (Controller.IsPointWithinRadius(Controller.firstSpawnPos, Controller.chaseRadius, Controller.target.transform.position) == false)
         {
             StateMachine.ChangeState(MonsterStateName.Move);
             return;
